@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head><title>Messages App</title>
+
+    <script src="https://unpkg.com/vue@3"></script>
+
+</head>
+<body>
+    <div id="app">
+        <li v-for="message in messages">
+            {{ message.text }} - {{ message.createdAt }}
+            <button @click="deleteMessage(message)">X</button>
+        </li>
+
+        <form @submit.prevent="addMessage">
+            <textarea v-model="newMessage" placeholder="Leave a message"></textarea>
+            <div><button type="submit" v-bind:disabled="messages.length >= 10">Add</button> </div>
+        </form>
+    </div>
+
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    messages: [],
+                    newMessage: ''
+                }
+            },
+            methods: {
+                addMessage(event) {
+                    if(!this.newMessage) {return ;}
+                    this.messages.push({
+                        text : this.newMessage, createdAt: new Date()
+                    });
+                    this.newMessage = '';
+                },
+                deleteMessage(message) {
+                    this.messages.splice(this.messages.indexOf(message), 1)
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
