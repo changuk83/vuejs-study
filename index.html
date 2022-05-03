@@ -14,7 +14,7 @@
 
         <form @submit.prevent="addMessage">
             <textarea v-model="newMessage" placeholder="Leave a message"></textarea>
-            <div><button type="submit" v-bind:disabled="messages.length >= 10">Add</button> </div>
+            <div><button type="submit" :disabled="addDisabled">Add</button> </div>
         </form>
     </div>
 
@@ -37,6 +37,11 @@
                 },
                 deleteMessage(message) {
                     this.messages.splice(this.messages.indexOf(message), 1)
+                }
+            },
+            computed: {
+                addDisabled() {
+                    return this.messages.length > 3;
                 }
             }
         }).mount('#app')
